@@ -1,0 +1,46 @@
+<div fxLayout="column" fxLayoutGap="10px">
+  <div>
+    <mat-form-field>
+      <input type="text" matInput [(ngModel)]="searchCriteria.searchtitle" placeholder="Title" #searchTitleField="ngModel" name="searchtitle">
+      <mat-hint>Search by title</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput [(ngModel)]="searchCriteria.searchauthor" placeholder="Author" #searchAuthorField="ngModel" name="searchauthor">
+      <mat-hint>Search by author</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="number" matInput [(ngModel)]="searchCriteria.limit" placeholder="Limit" #limitField="ngModel" name="limit">
+      <mat-hint>Limit number of records to be retrieved</mat-hint>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button color="primary" (click)="search()">Search</button>
+  </div>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <!-- Author Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+      </ng-container>
+
+      <!-- Cover_Thumbnail Column -->
+      <ng-container matColumnDef="cover_thumbnail">
+        <th mat-header-cell *matHeaderCellDef> Cover Thumbnail </th>
+        <td mat-cell *matCellDef="let element"> <img src="http://localhost:3000/thumbnails/{{ element.cover_thumbnail }}"
+            alt="Image of {{ element.cover_thumbnail }}" height="50" width="50"></td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="10" showFirstLastButtons></mat-paginator>
+  </div>
+</div>
